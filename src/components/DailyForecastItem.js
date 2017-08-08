@@ -9,9 +9,12 @@ class DailyForecastItem extends Component {
     }
     render() {
         return(
-            <div>
-                Forecast Item for a single day
-                Max Temp is: {this.props.data.maxTemp}
+            <div className="card col-sm-3">
+                <img className="card-img-top" src="..." alt="clouds and rain" />
+                <div className="card-block">
+                    <h4 className="card-title">Card title</h4>
+                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
             </div>
         )
     }
