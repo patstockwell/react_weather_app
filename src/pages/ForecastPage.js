@@ -8,12 +8,7 @@ class Forecast extends Component {
         super(props)
         this.state = {
             query: '',
-            forecastData: [
-                { maxTemp: 32, id: 123049870 },
-                { maxTemp: 33, id: 238475619 },
-                { maxTemp: 24, id: 169450968 },
-                { maxTemp: 25, id: 585875857 }
-            ]
+            forecastData: null
         }
         this.handleInput = this.handleInput.bind(this)
         this.fetchNewData = this.fetchNewData.bind(this)
@@ -37,25 +32,31 @@ class Forecast extends Component {
     }
 
     render() {
-        const dailyForecasts = this.state.forecastData.map(forecast => {
-            return <DailyForecastItem key={forecast.id} data={forecast}/>
-        })
+        // const dailyForecasts = this.state.forecastData.map(forecast => {
+        //     return <DailyForecastItem key={forecast.id} data={forecast}/>
+        // })
+        const heading = this.state.forecastData ? this.state.forecastData.city.name : 'Australian weather forecast'
+        console.log(this.state.forecastData)
         return(
             <div className="container">
-                <div className="row">
-                    Forecast page
+                <div className="forecast-heading">
+                    <h1 className="display-4 my-5">{heading}</h1>
                 </div>
                 <div className="row">
-                    {dailyForecasts}
+                    <DailyForecastItem key="1234" data={this.state.forecastData}/>
+                    <DailyForecastItem key="2345" data={this.state.forecastData}/>
+                    <DailyForecastItem key="1223534" data={this.state.forecastData}/>
                 </div>
-                <div className="row my-5">
-                    <form onSubmit={this.fetchNewData}>
-                        <div className="form-group">
-                            <input value={this.state.query} onInput={this.handleInput} type="text" className="form-control my-3" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="City" />
-                            <small id="emailHelp" className="form-text text-muted my-1">Get the 5 day forecast for any city in Australia.</small>
-                            <button type="submit" className="btn btn-primary my-3">Fetch New Data</button>
-                        </div>
-                    </form>
+                <div className="search-area row my-5">
+                    <div className="col-sm-4">
+                        <form onSubmit={this.fetchNewData}>
+                            <div className="form-group">
+                                <input value={this.state.query} onInput={this.handleInput} type="text" className="form-control my-3" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="City" />
+                                <small id="emailHelp" className="form-text text-muted my-1">Get the 5 day forecast for any city in Australia.</small>
+                                <button type="submit" className="btn btn-primary my-3">Search</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         )

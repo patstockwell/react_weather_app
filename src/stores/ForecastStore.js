@@ -4,11 +4,10 @@ import Dispatcher from '../dispatcher/Dispatcher'
 import cityList from '../australian.city.list.min'
 
 class ForecastStore extends EventEmitter {
+    
     constructor() {
         super()
-        this.forecastData = [
-
-        ]
+        this.forecastData = null
         // bind the functions IN this class TO this class
         this.handleChange = this.handleChange.bind(this)
         this.fetchApiData = this.fetchApiData.bind(this)
@@ -27,41 +26,40 @@ class ForecastStore extends EventEmitter {
         return undefined
     }
 
-    toCelcius(kelvin) {
-        return kelvin - 273.15
-    }
-
     fetchApiData(keyword) {
+        const self = this
         const id = this.getCityId(keyword)
-        console.log(id)
         const API_KEY = 'cdfee189f0f29adbbe63a56b6140263c'
         if(id) {
+            // city has been be identified
             console.log('fetching data...')
-            // go get data from API with axios
-            axios.get('http://api.openweathermap.org/data/2.5/forecast', {
+            // go get data from API
+            axios.get('http://api.openweathermap.org/data/2.5/forecast/daily', {
                 params: {
-                    id: id,
-                    APPID: API_KEY
+                    id: id, // country id (from cityList)
+                    APPID: API_KEY,
+                    units: 'metric', // celcius
+                    cnt: 8 // cnt: number of days returned (from 1 to 16)
                 }
             })
-            .then(function (response) {
-                console.log(response)
+            .then(function (response) { // store data
+                self.forecastData = response.data
+                // emit an event so that the components calling
+                // ForecastStore.on('change', someHandler) can update
+                self.emit('change')
             })
             .catch(function (error) {
                 console.log(error)
             })
         }
+        else {  // city can't be identified by the keyword
+            // if data exists, clear it and emit change
+            if (self.forecastData !== null) {
+                self.forecastData = null
+                self.emit('change')
+            }
+        }
 
-
-        this.forecastData = [
-            { maxTemp: 13, id: 123049870 },
-            { maxTemp: 12, id: 238475619 },
-            { maxTemp: 7, id: 169450968 },
-            { maxTemp: 9, id: 585875857 }
-        ]
-        // emit an event so that the components calling
-        // ForecastStore.on('change', someHandler) can update
-        this.emit('change')
     }
 
     getForecastData() {
@@ -77,9 +75,6 @@ class ForecastStore extends EventEmitter {
             default: {}
         }
     }
-
-
-
 }
 
 // instantiate the class
