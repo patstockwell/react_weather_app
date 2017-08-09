@@ -1,13 +1,45 @@
 .weather-icon {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
 }
 
 .max-min-temp {
     display: inline-block;
+    margin: 0;
 }
 
 .max-min-prefix {
     display: inline-block;
     min-width: 50px;
+    text-transform: uppercase;
+    font-size: small;
+    margin: 0;
+    font-weight: 100;
+}
+
+.weather-text {
+    display: block;
+    margin-left: 5px;
+    font-weight: 100;
+}
+
+.weather-tile {
+    height: 100%;
+}
+
+.day {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 80%;
+    font-weight: 100;
+}
+
+.weekend {
+    background-color: #fffaea;
+}
+
+.error {
+    font-weight: 100;
+    color: gray;
 }
