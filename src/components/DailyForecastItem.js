@@ -35,6 +35,12 @@ class DailyForecastItem extends Component {
         // weekend style className
         const weekend = (day === 0 || day === 6) ? 'weekend': 'weekday'
 
+        const rotate = {
+            'msTransform': `rotate(${this.props.data.deg}deg)`,
+            'WebkitTransform': `rotate(${this.props.data.deg}deg)`,
+            'transform': `rotate(${this.props.data.deg}deg)`
+        }
+
         return(
             <div className="col-lg-2 col-md-3 col-sm-4 mb-5">
                 <div className={`card weather-tile ${weekend}`}>
@@ -49,6 +55,10 @@ class DailyForecastItem extends Component {
                         <div>
                             <p className="max-min-prefix">Min:</p>
                             <h4 className="card-title max-min-temp">{min}°</h4>
+                        </div>
+                        <div>
+                            <p className="max-min-prefix wind">Wind:</p>
+                            <h4 className="up-arrow" style={rotate}>↑</h4>
                         </div>
                     </div>
                 </div>

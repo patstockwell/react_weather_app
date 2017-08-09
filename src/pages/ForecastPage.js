@@ -34,7 +34,7 @@ class Forecast extends Component {
                 return <DailyForecastItem key={forecast.dt} data={forecast}/>
             })
         }
-        const error = this.state.lastUnfoundSearch ? `Couldn\'t find ${this.state.lastUnfoundSearch}` : ''
+        const error = this.state.lastUnfoundSearch ? `Couldn't find ${this.state.lastUnfoundSearch}` : ''
         const heading = this.state.forecastData ? this.state.forecastData.city.name : 'Australian weather forecast'
         console.log(this.state.forecastData)
         return(
