@@ -4,10 +4,11 @@ import Dispatcher from '../dispatcher/Dispatcher'
 import cityList from '../australian.city.list.min'
 
 class ForecastStore extends EventEmitter {
-    
+
     constructor() {
         super()
         this.forecastData = null
+        this.currentKeyword = ''
         // bind the functions IN this class TO this class
         this.handleChange = this.handleChange.bind(this)
         this.fetchApiData = this.fetchApiData.bind(this)
@@ -27,12 +28,12 @@ class ForecastStore extends EventEmitter {
     }
 
     fetchApiData(keyword) {
+        this.currentKeyword = keyword
         const self = this
         const id = this.getCityId(keyword)
         const API_KEY = 'cdfee189f0f29adbbe63a56b6140263c'
         if(id) {
             // city has been be identified
-            console.log('fetching data...')
             // go get data from API
             axios.get('http://api.openweathermap.org/data/2.5/forecast/daily', {
                 params: {
@@ -53,17 +54,19 @@ class ForecastStore extends EventEmitter {
             })
         }
         else {  // city can't be identified by the keyword
-            // if data exists, clear it and emit change
-            if (self.forecastData !== null) {
-                self.forecastData = null
-                self.emit('change')
-            }
+            self.forecastData = null
+            self.emit('change')
+            self.emit('error')
         }
 
     }
 
     getForecastData() {
         return this.forecastData
+    }
+
+    getKeywordSearched() {
+        return this.currentKeyword
     }
 
     handleChange(action) {
