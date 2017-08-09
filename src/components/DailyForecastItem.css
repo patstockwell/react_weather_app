@@ -1,0 +1,13 @@
+.weather-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.max-min-temp {
+    display: inline-block;
+}
+
+.max-min-prefix {
+    display: inline-block;
+    min-width: 50px;
+}

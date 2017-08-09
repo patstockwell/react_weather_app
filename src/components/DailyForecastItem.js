@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './DailyForecastItem.css'
 
 class DailyForecastItem extends Component {
     constructor(props) {
@@ -8,12 +9,22 @@ class DailyForecastItem extends Component {
         }
     }
     render() {
+        const icon = '10n'
+        const description = 'clouds and rain'
+        const imageUrl = `http://openweathermap.org/img/w/${icon}.png`
         return(
-            <div className="card col-sm-3">
-                <img className="card-img-top" src="..." alt="clouds and rain" />
-                <div className="card-block">
-                    <h4 className="card-title">Card title</h4>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div className="col-md-3 col-sm-4">
+                <div className="card">
+                    <div className="card-block">
+                        <img className="card-img-top weather-icon" src={imageUrl} alt={description} />
+                        <div>
+                            <p className="max-min-prefix">Max:</p><h4 className="card-title max-min-temp">23°</h4>
+                        </div>
+                        <div>
+                            <p className="max-min-prefix">Min:</p><h4 className="card-title max-min-temp">13°</h4>
+                        </div>
+                        <p className="card-text">{description}</p>
+                    </div>
                 </div>
             </div>
         )
