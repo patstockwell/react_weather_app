@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DailyForecastItem from '../components/DailyForecastItem'
-import * as ForecastActions from '../actions/ForecastActions'
 import ForecastStore from '../stores/ForecastStore'
+import SearchBar from '../components/SearchBar'
 
 class Forecast extends Component {
     constructor(props) {
@@ -10,19 +10,6 @@ class Forecast extends Component {
             query: '',
             forecastData: null
         }
-        this.handleInput = this.handleInput.bind(this)
-        this.fetchNewData = this.fetchNewData.bind(this)
-    }
-
-    handleInput(event) {
-        this.setState({
-            query: event.target.value
-        })
-    }
-
-    fetchNewData(event) {
-        event.preventDefault()
-        ForecastActions.fetchData(this.state.query)
     }
 
     componentWillMount() {
@@ -47,16 +34,8 @@ class Forecast extends Component {
                     <DailyForecastItem key="2345" data={this.state.forecastData}/>
                     <DailyForecastItem key="1223534" data={this.state.forecastData}/>
                 </div>
-                <div className="search-area row my-5">
-                    <div className="col-sm-4">
-                        <form onSubmit={this.fetchNewData}>
-                            <div className="form-group">
-                                <input value={this.state.query} onInput={this.handleInput} type="text" className="form-control my-3" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="City" />
-                                <small id="emailHelp" className="form-text text-muted my-1">Get the 5 day forecast for any city in Australia.</small>
-                                <button type="submit" className="btn btn-primary my-3">Search</button>
-                            </div>
-                        </form>
-                    </div>
+                <div className="search-area my-5">
+                    <SearchBar />
                 </div>
             </div>
         )
